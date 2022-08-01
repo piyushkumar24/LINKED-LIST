@@ -1,0 +1,53 @@
+#include<stdio.h> 
+#include<stdlib.h> 
+typedef struct node{ 
+    int data; 
+    struct node *next; 
+}NODE; 
+NODE *head,*i; 
+void CreateList(int new_data) 
+{ 
+    NODE *new_node=(NODE *)malloc(sizeof(NODE)); 
+    new_node->data=new_data; 
+    new_node->next=NULL; 
+    if(head==NULL) 
+    head=new_node; 
+    else{ 
+        for(i=head;i!=NULL&&i->next!=NULL;i=i->next); 
+        i->next=new_node; 
+    } 
+} 
+void reverseList() 
+{ 
+    NODE *curr=head,*prev=NULL,*next; 
+    while(curr!=NULL) 
+    { 
+        next=curr->next; 
+        curr->next=prev; 
+        prev=curr; 
+        curr=next; 
+    } 
+    head=prev; 
+} 
+void PrintList() 
+{ 
+    for(i=head;i!=NULL;i=i->next) 
+    printf("%d ",i->data); 
+} 
+int main() 
+{ 
+    int n,i,num; 
+    printf("Enter the size of the linkedlist:"); 
+    scanf("%d",&n); 
+    printf("\nEnter the elements of linkedlist:"); 
+    for(i=1;i<=n;i++) 
+    { 
+        scanf("%d",&num); 
+        CreateList(num); 
+    } 
+    printf("\nThe linkedlist created is: "); 
+    PrintList(); 
+    reverseList(); 
+    printf("\nThe reversed linkedlist is:"); 
+    PrintList(); 
+}
