@@ -1,0 +1,90 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+};
+void linkedListTraversal(struct node *ptr){
+    while(ptr!=NULL){
+        printf("Element : %d \n",ptr->data);
+        ptr=ptr->next;
+    }
+}
+struct node *deleteFirst(struct node *head){
+    struct node *ptr=head;
+    head=head->next;
+    free(ptr);
+    return head;
+}
+struct node*deleteAtIndex(struct node *head,int index){
+    struct node*p=head;
+    struct node*q=head->next;
+    for(int i=0;i<index-1;i++){
+        p=p->next;
+        q=q->next;
+    }
+    p->next=q->next;
+    free(q);
+    return head;
+}
+struct node*deleteAtLast(struct node *head){
+    struct node *p=head;
+    struct node*q=head->next;
+    while(q->next!=NULL){
+        p=p->next;
+        q=q->next;
+    }
+    p->next=NULL;
+    free(q);
+    return head;
+}
+struct node *deleteAtGivenIndex(struct node *head,int value){
+    struct node*p=head;
+    struct node*q=head->next;
+    while(q->data!=value && q->next!=NULL){
+        p=p->next;
+        q=q->next;
+    }
+    if (q->data==value){
+        p->next=q->next;
+        free(q);
+    }
+    return head;
+}
+int main(){
+    struct node*head;
+    struct node*second;
+    struct node*third;
+    struct node*fourth;
+    struct node*fifth;
+    head=(struct node*)malloc(sizeof(struct node));
+    second=(struct node*)malloc(sizeof(struct node));
+    third=(struct node*)malloc(sizeof(struct node));
+    fourth=(struct node*)malloc(sizeof(struct node));
+    fifth=(struct node*)malloc(sizeof(struct node));
+    head->data=1;
+    head->next=second;
+    second->data=2;
+    second->next=third;
+    third->data=3;
+    third->next=fourth;
+    fourth->data=4;
+    fourth->next=fifth;
+    fifth->data=5;
+    fifth->next=NULL;
+    printf("The Linked List Before Deletion Is : \n");
+    linkedListTraversal(head);
+    head=deleteFirst(head);
+    printf("\nThe Linked List After Deletion(Deletion At Beginning) Is : \n");
+    linkedListTraversal(head);
+    head=deleteAtIndex(head,2);
+    printf("\nThe Linked List After Deletion(Deletion At Index) Is :\n");
+    linkedListTraversal(head);
+    head=deleteAtLast(head);
+    printf("\nThe Linked List After Deletion(Deletion At End) Is :\n");
+    linkedListTraversal(head);
+    head=deleteAtGivenIndex(head,3);
+    printf("\nThe Linked List After Deletion(Deletion At Given Index) Is :\n");
+    linkedListTraversal(head);
+    return 0;
+}
